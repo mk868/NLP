@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\driver">
+      <UniqueIdentifier>{802352ef-978a-4694-9cad-a914dae764b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\user">
+      <UniqueIdentifier>{fd9fe36f-1ac2-44ae-ad86-3fb52b8a0a0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\driver">
+      <UniqueIdentifier>{2d64344b-54de-41c1-9ff3-bb4b5635f43f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ssl">
+      <UniqueIdentifier>{09c65cb6-eccc-49e5-83f1-8e5b8ac6c3f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\html">
+      <UniqueIdentifier>{da6c5eb6-35c1-4b28-9803-7e5707914673}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\html\scripts">
+      <UniqueIdentifier>{42caff3a-6954-4b87-92a6-f8351ab37ad4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\user_config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ssl\cert.h">
+      <Filter>Header Files\ssl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ssl\private_key.h">
+      <Filter>Header Files\ssl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\driver\uart_register.h">
+      <Filter>Header Files\driver</Filter>
+    </ClInclude>
+    <ClInclude Include="include\driver\i2c_master.h">
+      <Filter>Header Files\driver</Filter>
+    </ClInclude>
+    <ClInclude Include="include\driver\key.h">
+      <Filter>Header Files\driver</Filter>
+    </ClInclude>
+    <ClInclude Include="include\driver\uart.h">
+      <Filter>Header Files\driver</Filter>
+    </ClInclude>
+    <ClInclude Include="include\stdout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\uart_hw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cgi_wifi_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\esplogger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\wifi_list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\wifi_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\esplib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\user_json.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\port_worker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\webserver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Base64.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\websocket_client.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ws_worker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="user\user_main.c">
+      <Filter>Source Files\user</Filter>
+    </ClCompile>
+    <ClCompile Include="driver\i2c_master.c">
+      <Filter>Source Files\driver</Filter>
+    </ClCompile>
+    <ClCompile Include="driver\key.c">
+      <Filter>Source Files\driver</Filter>
+    </ClCompile>
+    <ClCompile Include="driver\uart.c">
+      <Filter>Source Files\driver</Filter>
+    </ClCompile>
+    <ClCompile Include="user\stdout.c">
+      <Filter>Source Files\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\wifi_list.c">
+      <Filter>Source Files\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\wifi_manager.c">
+      <Filter>Source Files\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\cgi_wifi_manager.c">
+      <Filter>Source Files\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user_json.c">
+      <Filter>Source Files\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\port_worker.c">
+      <Filter>Source Files\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\io.c">
+      <Filter>Source Files\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\webserver.c">
+      <Filter>Source Files\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\Base64.c">
+      <Filter>Source Files\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\websocket_client.c">
+      <Filter>Source Files\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\ws_worker.c">
+      <Filter>Source Files\user</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="html\scripts\script.js">
+      <Filter>Resource Files\html\scripts</Filter>
+    </None>
+    <None Include="html\scripts\tmpl.min.js">
+      <Filter>Resource Files\html\scripts</Filter>
+    </None>
+    <None Include="html\scripts\base.js">
+      <Filter>Resource Files\html\scripts</Filter>
+    </None>
+    <None Include="html\index.html">
+      <Filter>Resource Files\html</Filter>
+    </None>
+    <None Include="html\style.css">
+      <Filter>Resource Files\html</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="html\icons.png">
+      <Filter>Resource Files\html</Filter>
+    </Image>
+    <Image Include="html\favicon.ico">
+      <Filter>Resource Files\html</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

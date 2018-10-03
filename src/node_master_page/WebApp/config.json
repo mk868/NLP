@@ -1,0 +1,10 @@
+﻿{
+  "connectionString": "postgres://root:root@localhost/inzproj",
+  "port": 7169,
+  "wsPath": "/api/esp_v1",
+  "wsPingTime": 10000,
+  "auth": {
+    "espon": "nelom"
+  }
+
+}

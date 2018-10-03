@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+    <header>
+        <% include ../partials/header %>
+    </header>
+
+    <main>
+        <div class="jumbotron">
+            <h3>List of devices:</h3>
+            <ul class="list-group">
+                <% devices.forEach(function(device){ %>
+                    <li class="list-group-item">
+                        <a href="/device/<%= device.id %>"><%= device.name %></a>
+                        <% if(device.connected){ %>
+                            <span class="badge badge-success">Connected</span>
+                        <% } else { %>
+                            <span class="badge badge-error">Disconnected</span>
+                        <% } %>
+                    </li>
+                <% }); %>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <% include ../partials/footer %>
+    </footer>
+
+</body>
+</html>

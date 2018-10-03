@@ -1,0 +1,19 @@
+{
+  "name": "nodejs-web-app1",
+  "version": "0.0.0",
+  "description": "NodejsWebApp1",
+  "main": "server.js",
+  "author": {
+    "name": "P50"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "ejs": "^1.0.0",
+    "express": "^4.6.1",
+    "express-basic-auth": "1.1.2",
+    "express-ws": "^3.0.0",
+    "pg": "^6.1.4",
+    "sequelize": "^3.30.2",
+    "node-schedule": "1.2.5"
+  }
+}

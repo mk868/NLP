@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+    <header>
+        <% include ../partials/header %>
+    </header>
+
+    <main>
+        <div class="jumbotron">
+            <h3><%= device.name %></h3>
+            Status: <% if(device.connected){ %>
+                <span class="badge badge-success">Connected</span>
+            <% } else { %>
+                <span class="badge badge-error">Disconnected</span>
+            <% } %>
+
+            
+            <h4>Short actions</h4>
+            <form action="" method="post">
+                <input type="hidden" name="id" value="<%= device.id %>" />
+                <input type="hidden" name="type" value="1" />
+                <button class="btn btn-default" name="enable" value="1" <%- device.connected?'':'disabled' %>>turn on</button> 
+                <button class="btn btn-default" name="enable" value="0" <%- device.connected?'':'disabled' %>>turn off</button>
+            </form>
+
+
+            <h4>Time actions</h4>
+            <form action="" method="post" class="form-inline">
+                <input type="hidden" name="id" value="<%= device.id %>" />
+                <input type="hidden" name="type" value="2" />
+                <input type="number" name="min" min="0" max="59" value="0" class="form-control" style="width:60px;" /> : 
+                <input type="number" name="sec" min="0" max="59" value="1" class="form-control" style="width:60px;" />
+                <input type="hidden" name="enable" value="1" />
+                <button class="btn btn-default" <%- device.connected?'':'disabled' %>>start</button>
+            </form>
+            <!--
+            todo: turn to time
+                -->
+        </div>
+    </main>
+
+    <footer>
+        <% include ../partials/footer %>
+    </footer>
+
+</body>
+</html>

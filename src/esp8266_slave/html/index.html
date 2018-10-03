@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+	<script src="scripts/tmpl.min.js"></script>
+	<script src="scripts/base.js"></script>
+	<script src="scripts/script.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css"/>
+	<title>espcon - config page</title>
+</head>
+<body onload="reloadContent()">
+<header>ESP8266 configuration page</header>
+<div id="col_left">
+	<ul>
+		<li><a href="#home">Home</a></li>
+		<li><a href="#scan">Scan</a></li>
+		<li><a href="#list">List</a></li>
+	</ul>
+</div>
+<div id="col_right">
+	<h2 id="content_label"></h2>
+	<div id="content"></div>
+</div>
+<div id="loader_box"><div id="loader"></div></div>
+	<script type="text/x-tmpl" id="tmpl-home">
+		connected: <%=o.ssid%><br/>
+	</script>
+	<script type="text/x-tmpl" id="tmpl-scan">
+		<table>
+			<thead>
+				<tr><th style="width:36px;"></th><th>ssid</th><th>auth</th><th>quality</th><th>actions</th></tr>
+			</thead>
+			<tbody>
+		<% for(var i=0; i<o.result.length; i++){
+		var quality = 2 * (100 + o.result[i].rssi);
+		var auth_type = o.result[i].authmode == AUTH_OPEN?AUTH_OPEN:AUTH_PERSONAL;
+		var auth_name = AUTH_NAME[o.result[i].authmode];
+		%>
+			<tr>
+				<td><%if(o.result[i].state & S_CON){%><span class="ico ico-con" title="connected"></span><%}%></td>
+				<td><%=o.result[i].ssid%></td>
+				<td><%=auth_name%></td>
+				<td class="td-center"><progress title="<%=o.result[i].rssi%> dBm" value="<%=quality%>" max="100" class="signal-quality"><%=quality%> dBm</progress></td>
+				<td><%if(o.result[i].state & S_NEW){ %>
+					<a class="ico ico-btn ico-add" title="add" href="#add?ssid=<%=encodeURI(o.result[i].ssid)%>&auth=<%=auth_type%>"></a>
+				<% } else { %>
+					<a class="ico ico-btn ico-<%=o.result[i].state & S_ERR?"error":"info"%>" title="info" href="#info?ssid=<%=encodeURI(o.result[i].ssid)%>"></a>
+				<% if(!(o.result[i].state & S_CON)){ %>
+					<span class="ico ico-btn ico-connect" title="connect" onclick="letConnect('<%=o.result[i].ssid%>')"></span>
+				<% } %>
+					<a class="ico ico-btn ico-edit" title="edit" href="#edit?ssid=<%=encodeURI(o.result[i].ssid)%>"></a>
+					<a class="ico ico-btn ico-del" title="delete" href="#delete?ssid=<%=encodeURI(o.result[i].ssid)%>"></a>
+					<% } %></td>
+			</tr>
+		<% } %>
+			</tbody>
+		</table>
+	</script>
+	<script type="text/x-tmpl" id="tmpl-list">
+		<table>
+			<thead>
+				<tr><th style="width:36px;"></th><th>ssid</th><th>login</th><th>actions</th></tr>
+			</thead>
+			<tbody>
+		<% for(var i=0; i<o.result.length; i++) { %>
+			<tr>
+				<td><% if(o.result[i].state & S_CON){ %><span class="ico ico-con" title="connected"></span><% } %></td>
+				<td><%=o.result[i].ssid%></td>
+				<td><%=o.result[i].login%></td>
+				<td>
+					<a class="ico ico-btn ico-<%=o.result[i].state & S_ERR?"error":"info"%>" title="info" href="#info?ssid=<%=encodeURI(o.result[i].ssid)%>"></a>
+					<a class="ico ico-btn ico-edit" title="edit" href="#edit?ssid=<%=encodeURI(o.result[i].ssid)%>"></a>
+					<a class="ico ico-btn ico-del" title="delete" href="#delete?ssid=<%=encodeURI(o.result[i].ssid)%>"></a>
+				</td>
+			</tr>
+		<% } %>
+			</tbody>
+		</table>
+	</script>
+	<script type="text/x-tmpl" id="tmpl-delete">
+		<input type="hidden" id="h_ssid" value="<%=o.ssid%>"/>
+		ssid: <%=o.ssid%><br/>
+		<%if(o.login){%>login: <%=o.login%><br/><%}%>
+		<%if(o.password){%>password: <%=o.password%><br/><%}%>
+		<button onclick="letDelete()">Delete</button> <button onclick="letBack()">Cancel</button>
+	</script>
+	<script type="text/x-tmpl" id="tmpl-edit">
+		<input type="hidden" id="h_ssid" value="<%=o.ssid%>"/>
+		ssid: <%=o.ssid%><br/>
+		<label><input type="radio" name="auth_type" onclick="gui_edit_update()" value="open"> Open</label>
+		<div id="auth_type_open">open div</div>
+		<label><input type="radio" name="auth_type" onclick="gui_edit_update()" value="personal"> Personal</label>
+		<div class="sub-form" id="auth_type_personal">
+			<label for="auth_type_personal_password">password:</label><input id="auth_type_personal_password" type="password" placeholder="<%=o.password%>"/>
+		</div>
+		<label><input type="radio" name="auth_type" onclick="gui_edit_update()" value="enterprise"> Enterprise</label>
+		<div class="sub-form" id="auth_type_enterprise">
+			<label for="auth_type_enterprise_login">login:</label><input id="auth_type_enterprise_login" type="text" value="<%=o.login%>"/>
+			<label for="auth_type_enterprise_password">password:</label><input id="auth_type_enterprise_password" type="password" placeholder="<%=o.password%>"/>
+		</div>
+		
+		<button onclick="letSave()">Save</button> <button onclick="letBack()">Cancel</button>
+	</script>
+	<script type="text/x-tmpl" id="tmpl-info">
+		ssid: <%=o.ssid%><br/>
+		<%if(o.login){%>login: <%=o.login%><br/><%}%>
+		<%if(o.password){%>password: <%=o.password%><br/><%}%>
+		<%if(o.error){%>
+		<ul>
+			<%for(var i=0; i<o.error.length;i++){%>
+				<li><%=o.error[i]%></li>
+			<%}%>
+		</ul>
+		<%}%>
+		
+		<button onclick="redirect('edit', {ssid:'<%=encodeURI(o.ssid)%>'})">Edit</button> <button onclick="redirect('delete', {ssid:'<%=encodeURI(o.ssid)%>'})">Delete</button> <button onclick="letBack()">Cancel</button>
+	</script>	
+</body>
+</html>

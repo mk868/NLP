@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{05D3A0FA-35D4-433D-8A67-82276846A7A0}</ProjectGuid>
+    <Keyword>MakeFileProj</Keyword>
+    <ProjectName>app_www_nlp_WS</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <NMakeOutput>upload.bat</NMakeOutput>
+    <NMakePreprocessorDefinitions>WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <SourcePath>user;driver</SourcePath>
+    <NMakeIncludeSearchPath>..\include;include;libesphttpd\include</NMakeIncludeSearchPath>
+    <NMakeBuildCommandLine>make.bat</NMakeBuildCommandLine>
+    <NMakeCleanCommandLine>make.bat clean</NMakeCleanCommandLine>
+    <IncludePath />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <NMakeOutput>esp8266app.exe</NMakeOutput>
+    <NMakePreprocessorDefinitions>_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <NMakeOutput>esp8266app.exe</NMakeOutput>
+    <NMakePreprocessorDefinitions>WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <NMakeOutput>esp8266app.exe</NMakeOutput>
+    <NMakePreprocessorDefinitions>NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Base64.h" />
+    <ClInclude Include="include\cgi_wifi_manager.h" />
+    <ClInclude Include="include\driver\i2c_master.h" />
+    <ClInclude Include="include\driver\key.h" />
+    <ClInclude Include="include\driver\uart.h" />
+    <ClInclude Include="include\driver\uart_register.h" />
+    <ClInclude Include="include\esplib.h" />
+    <ClInclude Include="include\esplogger.h" />
+    <ClInclude Include="include\io.h" />
+    <ClInclude Include="include\port_worker.h" />
+    <ClInclude Include="include\ssl\cert.h" />
+    <ClInclude Include="include\ssl\private_key.h" />
+    <ClInclude Include="include\stdout.h" />
+    <ClInclude Include="include\uart_hw.h" />
+    <ClInclude Include="include\user_config.h" />
+    <ClInclude Include="include\user_json.h" />
+    <ClInclude Include="include\webserver.h" />
+    <ClInclude Include="include\websocket_client.h" />
+    <ClInclude Include="include\wifi_list.h" />
+    <ClInclude Include="include\wifi_manager.h" />
+    <ClInclude Include="include\ws_worker.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="driver\i2c_master.c" />
+    <ClCompile Include="driver\key.c" />
+    <ClCompile Include="driver\uart.c" />
+    <ClCompile Include="user\Base64.c" />
+    <ClCompile Include="user\cgi_wifi_manager.c" />
+    <ClCompile Include="user\io.c" />
+    <ClCompile Include="user\port_worker.c" />
+    <ClCompile Include="user\stdout.c" />
+    <ClCompile Include="user\user_json.c" />
+    <ClCompile Include="user\user_main.c" />
+    <ClCompile Include="user\webserver.c" />
+    <ClCompile Include="user\websocket_client.c" />
+    <ClCompile Include="user\wifi_list.c" />
+    <ClCompile Include="user\wifi_manager.c" />
+    <ClCompile Include="user\ws_worker.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="html\index.html" />
+    <None Include="html\scripts\base.js" />
+    <None Include="html\scripts\script.js" />
+    <None Include="html\scripts\tmpl.min.js" />
+    <None Include="html\style.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="html\favicon.ico" />
+    <Image Include="html\icons.png" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

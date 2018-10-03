@@ -1,0 +1,318 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+    <header>
+        <% include ../partials/header %>
+    </header>
+
+    <script>
+        var devices = {};
+
+        $(document).ready(function () {
+            $('#devicesListbox').on('changed.bs.select', function (e) {
+                refreshEvents();
+            });
+
+
+
+            $.ajax({
+                url: '/api/devices',
+                dataType: 'json',
+                success: function (data) {
+
+                    for (var i = 0; i < data.length; i++) {
+                        $('#devicesListbox').append(
+                            '<option value="' + data[i].id +
+                            '" data-content="<span class=\'deviceColorRect\' style=\'background:' + data[i].color +
+                            "'>&nbsp;</span>" + data[i].name +
+                            '">' + data[i].name +
+                            '</option>'
+                        );
+
+                        devices[data[i].id] = data[i];
+                    }
+
+                    $('#devicesListbox').selectpicker('refresh');
+
+                    loadCalendar();
+                },
+                error: function () {
+                    $('#script-warning').show();
+                }
+            });
+
+
+        });
+
+
+        function redefineEvents(events) {
+            var deviceId = $('#devicesListbox').val();
+
+            for (var i = 0; i < events.length; i++) {
+                var enabled = events[i].group.device_id == deviceId;
+
+                events[i].className = enabled ? [] : ['event_background'];
+                events[i].editable = enabled;
+            }
+        }
+
+        function refreshEvents() {
+            var events = $('#calendar').fullCalendar('clientEvents');
+
+            redefineEvents(events);
+
+            $('#calendar').fullCalendar('updateEvents', events)
+        }
+
+
+        function loadCalendar(){
+
+            $('#calendar').fullCalendar({
+                timezone: "local",
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'agendaDay,agendaWeek,month,listMonth'
+                },
+                //eventStartEditable: false,
+                //eventOverlap: false,//TODO function to block overlap events with same device id
+                timeFormat: 'H:mm',
+                slotLabelFormat: "HH:mm",
+                weekNumberCalculation: "ISO",
+                ///locale: 'en-gb',
+                navLinks: true, // can click day/week names to navigate views
+                selectable: true,
+                selectHelper: true,
+                select: function (start, end) {
+
+                    showEditModal({
+                        start: start,
+                        end: end
+                    });
+
+                },
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                events: function(start, end, timezone, callback) {
+                    $.ajax({
+                        url: '/api/events',
+                        dataType: 'json',
+                        data: {
+                            // our hypothetical feed requires UNIX timestamps
+                            start: start.format('YYYY-MM-DD'),
+                            end: end.format('YYYY-MM-DD')
+                        },
+                        success: function (doc) {
+                            var events = [];
+
+                            for (var k = 0; k < doc.length; k++) {
+
+                                var group = {
+                                    id: doc[k].id,
+                                    device_id: doc[k].device_id,
+                                    start: moment(doc[k].start_date),
+                                    end: moment(doc[k].end_date),
+                                    title: doc[k].text,
+                                    repeating: doc[k].repeating,
+                                    repeating_end_date: doc[k].repeating_end_date
+                                }
+
+
+                                for (var i = 0; i < doc[k].portions.length; i++) {
+                                    var entry = {};
+
+                                    entry.color = devices[group.device_id].color;                                    
+                                    entry.group = group;
+                                    entry.id = doc[k].id;
+                                    entry.title = doc[k].text;
+                                    entry.start = moment(doc[k].portions[i].start_date);
+                                    entry.end = moment(doc[k].portions[i].end_date);
+
+                                    events.push(entry);
+                                }
+                            }
+
+                            redefineEvents(events);
+
+                            callback(events);
+                        },
+                        error: function () {
+                            $('#script-warning').show();
+                        }
+                    });
+                },
+                eventClick: function (event) {
+
+                    showEditModal(event);
+
+                    return false;
+                },
+                eventDrop: function (event, delta, revertFunc, jsEvent, ui, view) {
+                    var newEvent = event.group;
+
+                    newEvent.start.add(delta);
+                    newEvent.end.add(delta);
+
+                    $.ajax({
+                        url: "/api/events",
+                        type: "PUT",
+                        data: JSON.stringify({ event: newEvent }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            $('#calendar').fullCalendar('refetchEvents');
+                        }
+                    });
+
+                },
+                eventResize: function (event, delta, revertFunc, jsEvent, ui, view) {
+                    var newEvent = event.group;
+                    
+                    newEvent.end.add(delta);
+
+                    $.ajax({
+                        url: "/api/events",
+                        type: "PUT",
+                        data: JSON.stringify({ event: newEvent }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            $('#calendar').fullCalendar('refetchEvents');
+                        }
+                    });
+
+                },
+                loading: function (bool) {
+                    $('#loading').toggle(bool);
+                }
+            });
+
+        }
+
+    </script>
+<style>
+        body {
+            margin: 40px 10px;
+            padding: 0;
+            font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+            font-size: 14px;
+        }
+
+
+        #loading {
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        #calendar {
+            margin: 10px;
+        }
+
+    #devicesListboxGroup{
+        margin: 0 10px
+    }
+    
+    .deviceColorRect {
+        display: inline-block;
+        width: 20px;
+        margin-right: 10px;
+    }
+
+        .event_background {
+            pointer-events: none;
+            opacity: 0.2;
+        }
+
+    </style>
+
+
+
+    <main>
+         <div id='loading'>loading...</div>
+
+        <div class="form-group" id="devicesListboxGroup">
+            <select class="selectpicker" id="devicesListbox"></select>
+        </div>
+
+    <div id='calendar'></div>
+
+    <div class="modal fade" id="editEventModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Event details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="editEventModalAlert1" class="alert alert-warning">
+                        <strong>Warning!</strong> This is a periodic event, you edit the first occurrence of an event.
+                    </div>
+
+                    <form>
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input class="form-control" type="text" value="" placeholder="Additional description" id="editEventModalTitle">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-6 form-group">
+                                <label>Start date</label>
+                                <input type='text' class="form-control" id='editEventModalStartDate' />
+                            </div>
+                            <div class="col-xs-6 form-group">
+                                <label>End date</label>
+                                <input type='text' class="form-control" id='editEventModalEndDate' />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Repeat</label>
+                            <select class="form-control" id="editEventModalRepeating">
+                                <option selected value="">None</option>
+                                <option value="Daily">Daily</option>
+                                <option value="WorkingDays">Working Days</option>
+                                <option value="EveryWeek">Every Week</option>
+                                <option value="EveryMonth">Every Month</option>
+                                <option value="EveryYear">Every Year</option>
+                            </select>
+                        </div>
+
+                        <div class="row" id="editEventModalRepeatingEndDateGroup" style="display:none">
+                            <div class="col-xs-1 form-group">
+                                <label></label>
+                                <input type='checkbox' class="form-control" id='editEventModalRepeatingEndDateEnabled' />
+                            </div>
+                            <div class="col-xs-11 form-group">
+                                <label>Repeat end date</label>
+                                <input type='text' disabled class="form-control" id='editEventModalRepeatingEndDate' />
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="editEventModalDelete" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                    <button id="editEventModalSave" type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </main>
+
+    <footer>
+        <% include ../partials/footer %>
+    </footer>
+
+</body>
+</html>

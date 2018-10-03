@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "WebApp", "WebApp\WebApp.njsproj", "{87C01C0C-E919-4D28-ACE1-527D19A0C43B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CE54569E-17B7-424E-9D8B-A0F76A63713B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{87C01C0C-E919-4D28-ACE1-527D19A0C43B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87C01C0C-E919-4D28-ACE1-527D19A0C43B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87C01C0C-E919-4D28-ACE1-527D19A0C43B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87C01C0C-E919-4D28-ACE1-527D19A0C43B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
